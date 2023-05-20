@@ -1,0 +1,33 @@
+import os
+import shutil
+
+from_dir = ('/…/…/Downloads')
+to_dir = os.path.expanduser('/…/…/documents/Download_sort')
+list_of_files = os.listdir(from_dir)
+print("List of files in the source directory:")
+print(list_of_files)
+
+for file_name in list_of_files:
+    name, extension = os.path.splitext(file_name)
+    
+    # If the extension is blank, continue to the next file
+    if not extension:
+        continue
+    
+    # Check if the file extension is in the list of allowed extensions
+    allowed_extensions = ['.txt', '.doc', '.docx', '.pdf']
+    if extension.lower() not in allowed_extensions:
+        continue
+    
+    # Create the paths for the source, destination, and new folder
+    path1 = os.path.join(from_dir, file_name)
+    path2 = os.path.join(to_dir, "Document_Files")
+    path3 = os.path.join(path2, file_name)
+    
+    # Check if the destination folder exists
+    if not os.path.exists(path2):
+        os.makedirs(path2)
+    
+    # Move the file to the destination
+    shutil.move(path1, path3)
+    print("Moved file:", file_name)
